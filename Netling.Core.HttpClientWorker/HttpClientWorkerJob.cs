@@ -30,6 +30,14 @@ namespace Netling.Core.HttpClientWorker
             _stopwatch = Stopwatch.StartNew();
             _localStopwatch = new Stopwatch();
             _workerThreadResult = workerThreadResult;
+
+            // ignore server certificate
+            var handler = new HttpClientHandler()
+            {
+                ServerCertificateCustomValidationCallback = (a, b, c, d) => true
+            };
+
+            var http = new HttpClient(handler);
             _httpClient = new HttpClient();
         }
 
